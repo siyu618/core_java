@@ -1,0 +1,882 @@
+Chapter 4:
+1. traditional structed programming
+   Algorithm + Data structures = Programs
+   First is algorithm, then design the data structure.
+
+2. OOP reverses the order, data structure comes first, and then think of Algorithm
+
+Encapsulation: information hiding
+
+Objects:
+   behavior
+   state
+   identify
+
+Identify Class
+    Nouns => class
+     Verbs => methods
+
+Relationships between classes
+   Dependence(uses-a)
+       Try to minimize the number of classes that depend on each other.
+        * If AClass is unaware of the existence of BClass, it is also unconcerned about any changes to BClass.
+   Aggregation(has-a)
+       This is straighforward.
+   Inheritance(is-a)
+       A more special and a more general class.
+       
+Java object are always on heap.
+Class:
+    Fileds:
+         private
+          public : should not be
+     Methods (has a implict parameter : this):
+         public
+          private: could be, some interface should not be visialbe to the user.
+          static methods:
+              a. does not access the filed of the object
+               b. only access the static members of the class
+          Factory Methods
+              static, like constructor but has different name
+          Method Parameters
+              call by value : In java it is always in this case
+                   * primitive types (numbers, boolean values)
+                    * Object Refrences
+               call by refrence :
+     Default Field Initialization:
+         number ==> 0
+          boolean ==> false
+          Object ==> null
+          *** We should no rely on this, it is bad programming style.
+     Default constructor:
+         If no constructor provided by your code, it will be provided automatically.
+              Default Field Initialization.
+          If not, it will not be provided.
+          this(...)
+     Explicit Field Initialization:
+         It is a good idea to do this, regardless of the constructor call.
+     Initialize block
+         Executed before the body of constructor.
+          Static initialization block to initialize static fields.
+     Finalize method
+         Will be called before the garbage collector sweeps away the object.
+     Import
+         Packages
+          static imports
+              import static java.lang.System.*;
+               exit(0); // i.e., System.exit
+     Java Doc
+
+Chapter 5: inheritance
+Java use public inheritance, unlike the C++ who has three kinds : public, protected, and private.
+keyword "extends":
+    supper and sub comes from set in math.
+keyword super:
+     The method in subclass has no direct access to the private fields in supclass.
+     Only the supclass itself could access its private fields.
+     Now you should use super.XXX
+     When super(), it should be the first statement of the constructor of subclass.
+Inheritance can never take away any fields and methods.
+   Java does not support multiple inheritance.
+   Should follow "is a" rule.
+   Subclass should be a superclass, and superclass is not a superclass.
+  
+Polymorphic:
+   Object variables are polymorphic.
+   Superclass superClass = new Subclass();
+   Superclass[] superclasses = new Subclasses[10];
+
+Dunamic Binding:
+    object.f(param), param is String
+     1. Assumes that the declare type of object is C.
+        The compiler enumetes all methods called f in class C and public methods called f in the superclasses of C.
+        **Now the compiler knows all the possible candidates for the method to be called.
+     2. Overloading resolution:
+        The compiler determines the types of the parameters that are supplied in the method call.
+        if an unique one best matches, then it will be shosen to be called.
+        It will be more complex because of type conversions(int ot double , subclass to superclass)
+        If it cannot find one or find more, the compiler will report an error.
+        **Now the compiler knows the name and parameter types of the method to be called.
+     3. If the methond is private, static, final or construcor, then the compiler knows exactly which methond to call.
+        **It is called static binding.
+        Otherwise, the moethod to be called depends on the actual type of the implicit parameter, and dynamic
+        binding must be used at runtime.
+        **It is called dynamic binding.
+     4. The method to be called nis appropriate for the actual type of object.
+        Let's say object's actual type is D (a subclas of C),
+        if D has a method f(String), it will be called.
+        if not, the superclass of D is searched, and so on.
+     * It would be time consuming to do the serach, so the VM percomputes for each class
+       a method table.
+     * When overriding a mtthod, the subclass method must be at least as visable as the super class method.
+
+Preventing inheritance : final classes and methods
+Final:
+   class: make all the method final
+          can not have subclass
+   method: make the method can't be overriden.
+Casting:
+    ClassCastException
+     instanceof
+Abstract classes:
+    If a class has an abstract methond, then the class should be abstract.
+     Abstract class can have fields and concrete methods.
+     Abstract methods act as placeholders for methods that are implemented in the sub-classes.
+     A class can be clared as abstract enen though it has no abstract class.
+     Abstract classes can not be instantiated, but you can create variables.
+Protected Access:
+    For fields, the best is tagged as private..
+     For methods, it could be protected, so it can be accessed by subclass.
+     Summay of the for access modifiers:
+         * Private : visible to the class only.
+          * public  : visible to the world
+          * protected: visible to the package and all subclasses
+          * by default : visible to the package
+
+Object : The cosmic superclass
+    The primitive types (numbers, characters and boolean values) are not objects.
+
+equals method:
+   Reflexive : x.equals(x) should be true
+   symmetric : x.equals(y) return true if and only if y.equals(x) returns true;
+   transitive: x.equals(y) == true + y.equals(z) == true ===> x.equals(z) should be true;
+   consistent: if x and y has not changed, the repeated call x.equals(y) should return the same value;
+   for non-null object x: x.equals(null) should alwasys return false;
+   If subclass can have their own notion of equality, the symmetry requirement forces you to use the getClass test.
+   If the notion of equality is fixed in the supper class, then you can use instance of test and allow objects of different subclaasses to be equal.
+   @Override public boolean equals(Object otherObject) {
+       if (this == otherObject) {
+            return true;
+        }
+        if (otherObject == null) {
+            return false;
+        }
+        // if (!(otherObject instanceof ClassName) )
+        if (getClass != otherObject.getClass) {
+            return false;
+        }
+        ClassName other = (ClassName)otherObject;
+        return filed1 == other.filed1....;
+    }
+     If you redefine equals method, you should always redefine hashCode method.
+
+hashCode method:
+    In Object class, the hashCode is computed based on the memory address.
+     In String class, the hashCode is computed based on the content.
+     The definations of equals and hashCode must be compatible.
+         If x.equals(y) is true, then x.hashCode() == y.hashCode() should be true.
+toString method:
+java.util.ArrayList<T>
+    ArrayList<T>()
+     ArrayList<T>(int initialCapacity)
+     boolean add(T obj)
+     int size()
+     void ensureCapacity(int capacity)
+     void trimToSize()
+     Access:
+         staff.set(i, harr) : i should be in range [0, size())
+    Compatibility between Typed and Raw Array Lists
+        -Xlint:unchecked
+Object Wrappers and autoboxing
+    Wrappers:
+         Integer,Long,Float,Double,Short,Byte,Character,Void,Boolean
+          The wrapper class are final and *immutable*.
+     Autoboxing (taken from C#)
+         list.add(3) automatically translated to list.add(new Integer(3))
+          int n = list.get(i) ==> int n = list.get(i).intValue();
+          ** The boxing and unboxing is a courtesy of the compiler, not the virtual machine.
+
+Methods with varialbe number of parmeters
+    public static double max(double... values) {
+         // should check if the vaues is null
+         double largest = Double.MIN_VALUE;
+          for (double v : values) {if (largest < v) {largest = v}}
+          return largest;
+     }
+Enumeration Classes
+    use == to compare them
+     static Enum valueOf(Class enumClass, String name);
+     String toString();
+     int ordinal();
+     int compareTo(E other)
+Reflection:
+    Mainly used for tool builders, not applicaion programmers.
+         * Analyze the capabilities of classes at runtime.
+          * Inpsect objects at runtime
+          * Implement generic array manipulation code
+          * Take advantage of Method objects that work just like function pointers in language in C++.
+The Class class:
+    Employee e = new Emplyee();
+     Class c1 = e.getClass();
+     Calss c2 = Date.class;
+     System.out.println("c2:" + c2.getName());// java.util.Date
+     static Class forname(Strign classname);
+     Object newInstance(); // java.lang.Class
+     Object newInstnce(Object[] args);// java.lang.refect.Constructor
+
+Using reflection to analyze the capabilities of Classes
+    Field, Method, Constructor classes.
+     Modifier
+     Class :
+         getFields, getMethods,getConstructors : return the **public** fileds, methods, constructors of the class and the ones in supper class.
+          getDeclaredFields, getDeclaredMethods, getDeconstructors : return the ones declared in the class, this includes private and protected ones.
+
+MethodPointers
+    It is dangerous and error prone.
+     Use interface instead.
+    
+Design hits for inheritance:
+    1. place common operations and fields in the superclass
+     2. Don't use protected fileds
+     3. Use inheritance ot model the "is-a" relation ship
+     4. Don't use inheritance unless all inherited methods make sence.
+     5. Don't change the expected behavior when you override a method.
+     6. Use polymorphism, mot type information
+     7. Don't overuse reflection.
+
+Interface:
+Characteristic:
+     Interface cannot hava instance fields;
+      the methods are never implmented in the interface;
+      all the methods are automacially public.
+
+To make a class implement an inteface:
+    a. declare the class "implements" the interface
+     b. supply definitions for all methods in the interface.
+         * When define the method, you must declare it as public, or it will be default(packge) visibility.
+    
+java.lang.Comparable<T>
+    int compareTo(T other):
+        must ensure that sgn(x.compareTo(y)) == -sgn(y.compareTo(x))
+     if subclasses have different notions of comparsion, then you should outlaw comparsion of objects that belong to different classes.
+         each class should start with
+               if (getClas() != other.getClass()) {throw new ClassCastException()}
+     if there is a common algorithm for comparing subclasses objects, just provide a single one in superclass, and mark it as final.
+Properties of interface:
+     a. can not be instanced, but it could have variables and variable could point to an object of the class that implements the interface..
+     b. you can extend interface
+     c. could not have instace fields or static methods, but you can apply constants in them.
+     d. methods in interface are public
+     e. fileds in interface are public static final
+Abstract class and interface:
+    each class can have only one superclass, but can implement multiple interfaces.
+Objcet cloning:        
+    clone() method is protected, field-by-field copy.
+     shallow copy and deep copy
+Inner Classes:
+    Attributes:
+        * Can assess the data from the scope in which they are defined.
+        * Can be hidden from other classes in the same package.
+        * Anonymous inner classes are very handy when you want to define callbacks without writing too much code.
+     In inner class, there is a refrence to the outter objcet
+     The inner class are used by compiler, not the jvm.
+     Local inner class:
+        * Has no access specifier, the scope is the block which define it.
+        * Access final variables from Out Method.
+     Anonymous inner class
+     Static inner class
+Proxy class
+    interface
+     interfaceImpl
+     interfaceImplProxy
+    
+    
+
+Chapter 7: Graphics Programming
+AWT(Abstract Window Toolkit) : deal with user interface elements by delegating their creation and behavior to the native GUI tookkit on each targeting platform.
+   * Write once, debug everywhere
+Swing : is firstly written by Netscape, later introduce by Sun.
+   * Paint on to blank windows
+   * All swing components must be configured from the event dispatch thread. EventQueue.invokeLater(new Runnable() {public void run(){//statements;}})
+JFrame.getContentPanel().add(JComponent)
+My component extends JComponent {pubic void paintComponent(Griphics g){}}
+  
+  
+
+Chapter 8: Event handling  
+  
+
+Chapter 9: Introduction to Layout Management
+Componets are placed inside containers, and layout manager determines the position and size of the componets in the container.
+    
+
+Chapter 10: Deploying Applications and Applets
+1. jar
+   jar cvf[me] my.jar *.class
+   java -jar my.jar
+   URL Class#getResource(String name)
+   InputStream Class#getResourceAsStream(String name)
+    
+   Seal
+     For package visiable variable and method, if you write a class in the same package, then you can asscess them.
+        In order to avoid/forrbiden this, you can seal this when package/jar.
+       Name: com/mypackage/util
+        Sealed: true
+
+2. Java Web Start
+    Java Network Launch Protocol (JNLP) + tomcat
+     Sandbox for remote code to be excuted locally.
+     Signed code
+     JNLP API
+
+3. Applet
+    pass param by using <param>, and it should be processed in the init() method.
+        getParameter(String name)
+4. Storage of Application Preference
+    java.util.Properties
+     java.lang.System
+     java.util.prefs.Preferences
+
+Chapter 11: Exceptions, Logging, Assertions, and Debugging
+1. Dealing with Errors
+   When error occurs:
+      * Notify user the error
+       * Save the work, and
+       * Allow user to gracefully exit the program
+   Error types:
+      * User input error
+       * Device errors
+       * Physical limitations
+       * Code errors
+   The classfication of the Exceptions
+      * All are drived form Throwable
+       * Error and Exception
+          * Error describes the internal error and resource exhaustion inside java runtime system.
+              * User should not throw this kind of exception
+           * the Programmer should focus on the Exception hierarchy.
+           * Error and RuntimeException are unchecked exception.
+              * Unchecked exceptions are beyond your control : Error
+               * result from conditions that you should not have allowed in the first place.
+           * Others are checked exceptions.
+           * Override a method, it could not throw a more general checked exception that the supper class method throws.
+           * Hanlde exception or propagate it
+              * Add the Exception to the throw list
+               * If you are overwriting a method that throws no exception, you must catch each checked exception.
+               * Not allowed to throw more exceptions than a supperclas method.
+           * Throw multiple exceptions
+           * Rethrow and chaining exceptions
+              * Rethrow is used to change the exception type.
+               * TIP : If a method doesn't allow to throw a checked exception, you can user a wapper, such as RuntimeException.
+               * Throwable.initCause() Throwable.getCause();
+           * Finally
+              * If it contains return statement
+               * It is good to throw no exceptions in the finally block.
+     Analyzing Stack Trace Elements
+        * Throwable.getStackTrace();
+        * java.lang.StackTraceElement
+     Tips for using Exceptions
+        * a. Exception handling is not supposed to replace a simple test
+        * b. Do not micromanage exceptions
+        * c. Make good use of exception hierarchy
+           * Do not just throw RuntimeException
+            * Do not just catch Thtowable
+            * Respect the difference between checcked and unchecked exceptions.
+        * d. Do not squelch exceptions
+        * e. Do not hesitate to turn an exception into another exception.
+        * f. When you detect an error, "tough love" works better than indulgence.
+        * e and f can be summarized as "throw early, catch late"
+        * Propagating exception is not a sign of shame
+2. Using Assertions
+Allow users to put in checks during testing and have them automatically removed in the production code.
+   Usage:
+      assert condition;
+      assert condition : expression;
+   Assertion Enabling and disabling
+      Enabling/disabling is the function of class loader, it is disabled by default.
+       java -enableassertions Myclass1 -ea:MyPackage -disabelasserations MyClass3 -da:MyPackage3
+       -ea and -da do not apply to the system class, use -enablesystemassertions/-esa
+   Using Assertions for Parameter Checking
+      * Assertion failures are intened to be fatal, unrecoveable errors.
+       * Assertion checks are turned on during development and testing.
+   Using Assertions for Documenting Assumptions
+   java.lang.ClassLoader : used to set/clear the assertion for classes
+3. Logging
+   System.out.println ==> log, configuration file
+   Loging levels:
+      SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST
+       LOGGER.SETLEVEL
+   Child logger inherit the property from the parent logger. com.mypackage.test inherits from com.mypackage.
+   If a higher level than INFO is set, the configuration for the log handler also should be changed for it suppresses messages bellow INFO.
+   use logp when there is optmization in case you need detail message.
+      * entering/exiting
+   Changing the LogManager Configuration
+      * Default configuration file is located at "jre/lib/logging.properties"
+       * Use another file:
+          * java -Djava.util.logging.config.file=ConfigurationFile MainClass
+          * The log manager is initialized during VM startup, so Calling System.setProperty("java.util.logging.config.file", file) does not work.
+       * For console output setting
+          * java.util.logging.ConsoleHandler.level=FINE
+   Localization
+      * As resource file
+          * com/mycompany/logmessages_{en,de}.properties
+           * Logger logger = Logger.getLogger(loggerName, "com.mypackage.logmessages")
+   Handlers
+      * Java.util.logging.ConsoleHandler.level
+       * change both the default logger level and the handler level in the configuraion.
+       * FileHandler
+       * StreamHandler
+   Filters
+      isLoggable(LogRecord record)
+   Formatters
+      format
+       formatMessage
+   A logging Recipe
+      * 1. For a simple application, choose a single logger.
+           private static final Logger logger = Logger.getLogger("com.mycompany.myproject");
+       * 2. It is a good idea to install a more resonalbe default in your application.
+          * in main method
+       * 3. The log() fine()
+   Debugging Tips
+      * You can print or log the value of any variable with code like
+           System.out.println(); Logger.global.info();
+       * You can put a sperate main() in your class.
+       * Junit/Testng
+       * A logging proxy.
+       * Get stack trace from any exception object with printStackTrace() Thread.dumpStack()
+       * Stack Trace is print to System.err, you can make it to Syste.out with PrintWriter.
+       * Redirect : java MypProgram >& error.txt
+       * Thread.setDefaultUncaughtExceptionHandler(), and store it to a single file.
+       * To watch teh class loading, launch the JVM with -verbose flag.
+       * For a swing, you can get the hierachy: CTRL + SHIFT + F1
+       * For a swing, user JComponet.setDebugGraphicsOptions
+       * use -Xlint to make checks.
+       * jconsole processID
+       * jmap, jhat
+       * -Xprof
+         * Using a Console Window
+      * Tracing AWT Events
+         * EventTracer tracer = new EventTracer();
+          * tracer.add(frame);
+      * Let tht AWT Robot Do the work
+      * Using IDE
+          
+Chapter 12: Generic Programming
+   * Generic class
+        class Pair<T, U> {}    
+   * Generic method
+      public static <T> T getMiddle(T[] arr)
+   * Bound for type vaiables
+      <T extends BoundingTypeClass & BoundingType2Interface & BoundingType2Interface, V >
+   * Generic code and Virtual machine
+      The VM does not have objects of generic types - all objects belong to ordinary class.
+       A raw type is automatically provided. The type is replaced by their boundary.
+          * The first Boundary type, or object for variables without bounds.
+           * The compiler inserts casts when necessary.
+           * Different to C++ who make instances for each type.
+   * Translating Generic Methods
+      * Insert bridge method to fix the type erasure.
+          * It calls the newly defined method.
+       * In the VM, the parameter types and the return type specify a method.
+        
+       * HINTS
+          * There no generic in the virtual machines, only ordinary classes and methods.
+           * All type parameters are replaced by theri bounds.
+           * Bridge methods are synthesized to preserve polymorphism
+           * Casts are inserted as necessary to preserve type safty.
+   * Calling Legacy code
+      * Annotations : @SuppressWarnings("unchecked")
+   * Restrictions and Limitations
+      * Type Parameters cannot be instantiated with Primitive Types
+          * No Pair<double>, only Pari<Double>
+       * Runtime Type inquiry only works with Taw Types
+          * Due to type erasure : a instatnceof Pair<String> is the same as "a instanceof Pair"
+             * Test and cast is the same.
+      * YOu cannot throw or catch instances of a generic class
+       * Arrays of parameterized Types are not equal.
+          * Pair<String>[] table = new Pair<String>[10]; // error
+           * Pair<String>[] table = new Pair[10]; // works
+              * table[0] = new Pair<Integer>(1, 2);// error for type check.
+           * Use ArrayList<Pair<String>> instead.
+      * YOu can not instantiate type variables.
+          * Such as new T(), new T[], T.class
+           * Try reflection
+              * T.class.newInstance() will also fail.
+               * Try
+                  public static <T> Pair<T> makePair(Class<T> cl)
+                  {
+                     try{ return new Pair<T>(cl.newInstance(), cl.newInstance())}
+                      catch(Exception ex) {return null;}
+                  }
+                  call like : Pair<String> p = Pair.makePair(String.class)
+      * Type varialbes are not valid in static contexts of generic classes
+       * Beware of clashes after erasure.
+           class Calendar implements Comparable<Calendar> { . . . }
+           class GregorianCalendar extends Calendar implements Comparable<GregorianCalendar> {}// error due to birdge methond
+      * Inheritance Rules for Generic Types
+          * Pair<Manager> is not a subtype of Pair<Employee>
+           * Infact there is no relationship between Pair<S> and Pair<T>, no matter how S and T are related.
+         * You can always convert a parameterized type to a raw type.
+      * Wildcard Types
+          * Pair<? extends Employee>
+           * Suppertype bounds for wildcards
+              * ? super Manager
+           * Wildcards with supper bounds let you write a generic type.
+           * Wildcards with subtype bounds let you read from a generic type.
+          * Unbounded Wildcards
+              * Pair<?>
+           * Wildcard Capture
+              public static void swap(Pair<?> p) {
+                  //? t = p.getFirst();
+                  swapHelper(p);
+              }
+
+              public static <T> void swapHelper(Pair<T> p) {
+                  T t = p.getFirst();
+                  p.setFirst(p.getSecond());
+                  p.setSecond(t);
+              }
+             * It is only legal in very limited circumstances.
+                * The compiler must be able to guarantee that the wildcard represents a single, definte type.
+         * Reflection and Generics
+              * Class<T>
+                  * T newInstance()
+                  * T cast(Object obj)
+               * Using Class<T> Parameters for Type Matching
+
+Chapter 13 : Collections
+1. Collection interfaces
+   * Abstract mechanism for visiting elements in an arbitray container
+       * Separating collections interfaces and implementations
+          * Queue : Circular array , Linked list
+       * Collections and Interfaces
+          * public interface Collection<E> {boolean add(E element);  Iterator<E> iterator();}
+           * public interface Iterator<E> {E next(); boolean hasNext(); void remove();}
+           * process all the elements
+              * while(iter.hasNext()) {iter.next();}
+               * for (E e : collection) {} // the compiler change the code into a loop with iterator.
+         * next() : the iterator jumps over the next element, and it returns a reference to the element that it just passed.
+           * remove() : removes the element that was returned by the last call to next.
+              * There is a dependency between next() and remove()
+                  * You can not remove the same element twice. // a new next() is needed.
+           * public abstract AbstractCollection<E> implements Collection<E> {}
+2. Concrete collections
+      * Linked lists
+          * Iterator remove() : delete the last viewed element, still relies on the next()
+           * Collection add() : add to the end of the list
+           * get(int index); // O(n)
+           * using iterator to add elements makes sense only for collections that have a natual  ordering.
+           * ListIterator
+              * previous(); // will change the state of lastReturned
+               * add() : insert before the iterator position
+               * If two iterator operate on the same list, it will throw ConcurrentModificationException.
+                  * The collection has a count, and the iterator has a account to track the number of mutating operations.
+          * Array Lists
+              * Vector : synchronized, and will waste time if you do not need synchronization.
+      * Hash Sets
+          * Hash table : hashCode
+              * hashCode and equals() must have be compatible.
+               * Hash collision.
+               * the bucket count is round to the next pow of 2
+               * load factor determines when the hash table is re-hashed
+                  * by default it is 0.75, if full, the bucket size is mutiplied by 2
+           * Tree Set
+              * Red-black tree.
+               * Object comparison
+                  * class AAA implements java.lang.Comaprable<T> {int comapreTo(T other);}
+                  * class MyComaprator implements java.util.Comparator<T>{ int comapre(T a, T b);}
+                  * java.util.SortedSet<E>
+                  * java.util.NavigableSet<E>
+           * Queues and Deques
+              * boolean add(E e); boolean offer(E e);
+               * E remove(); E poll();
+               * E element(); E peek();
+               * java.util.Queue<E>;
+               * java.util.Deque<E>;
+               * java.util.ArrayDeque<E>;
+               * Priority Queues
+                  * heap
+      * Maps
+          * HashMap and TreeMap
+              * Set<K> keySet();
+               * Collection<K> values();
+               * Set<Map.Entry<K, V>> entrySet();
+           * Speicalized Set and Map Classes
+              * Week Hash Maps
+                  * Week reference used for garbage collection
+               * Linked hash sets and maps
+                  * Remembers in which order : use doubli link to get this.
+                  * Also you can use the access order: get() put() will put the affected entry to the end of the linked list.
+                     * The order is useful for implementing the "least recently used."
+               * Identity HashMap
+3. The collection Framework
+   * Views and Wrappers
+      * Methods to change the size will throw UnsupportedOperationException.
+          * Arrays.asList(), returns a Arrays.ArrayList
+           * Collections.nCopies(int n, anObject); returns a Collections.CopiesList
+           * Collections.singleton(anObject)
+      * Subranges
+          * operation on subranges also affects the original
+       * Unmodifiable Views
+       * Synchronized Views for multiple threading
+       * Checked Views
+       * A note on optional operations
+          * A view usually has som restriction : read-only, not able to change the size...
+       * Buld Operations
+          * retainAll(), removeAll(), addAll()
+       * Converting between Collections and Arrays
+          * Arrays.asList();
+           * toArray();
+4. Algorithms
+   * Sorting and Shuffling
+      * use merger sort : slow than quick sort, but it is stable.
+       * Collections : static <T extends Comparable<? super T>> void sort(List<T> elements)
+       * Collections : static <T> void sort(List<T> elements, Comparator<? super T> c)
+       * for sort : the this should be mmodifiable and resizable
+   * Binary Search
+      * int binarySearch(List<T> elements, T key, Comparator<? super T> c);
+          * if res >= 0; c.get(i)
+           * if res < 0; it means the insertion location c.add(-i-1, element)
+           * it requires RandomAccess
+   * Simple Algorithms
+      * min, max, copy, fill, addAll, replaceAll, indexOfSubList, lastIndexOfSubList, lastIndexOfSubList, swap, reverse,, totate,
+       * frequence, disjoint
+   * Writing Your Own Algorithm
+      * You should work with interface, not concert implementations, whenever possible.
+5. Elgacy Collections
+   * The Hashtable Class
+      * the function is the same as HasMap, but it is synchronized.
+   * Enumerations
+      * hasMoreElements(), nextElement(),
+   * Property Maps
+      * the subclass of Hashtable
+   * Stacks
+      * extends from Vector class
+   * Bit Sets
+      * a sequence of bits
+   * The "Service of Eratosthenes" BenchMark
+
+Chapter 14: Multiple Threading
+1. What Are Threads
+   * Using Threads to Give Other Tasks a Chance
+      * java.lang.Runnalbe
+       * java.lang.Thread
+   * Interrupting Threads
+2. Interrupting Threads
+   * interrupt() : force a thread to terminate
+      * when called, interrupted status is set
+       * If a thread is blocked, it cannot chekd the interrupted status. it will throw InterruptedException.
+       * the isInterrputed check is neither nessary nor useful if you call the sleep method
+          * If you call sleep when the interrupted status is set
+               * it doesn't sleep
+                * But clear the status, and throws an InterruptedException.
+           * the interrupted() also clear the status,
+           * isInterrupted() doesn't change the status.
+           * DONOT ignore the InterruptedException
+              * reset the status by Thread().currentThread().interrupt();
+               * Or just throw the exception.
+3. Thread States
+   * Six states
+      * New, Runnable, Blocked, Waiting, Timed waiting, Terminated.
+       * call the getState() to get the state of the thread.
+       * New:
+          * new Thread(r), it is not running,
+           * a certain amount of bookeeping needs to be done before a thread can run.
+       * Runnalbe:
+          * once start() is invoked, it is in the runnable state.
+           * may or may not bactually be running.
+              * it is up to eh operating system.
+      * Blocked and Waiting Threads
+          * it is temporatily inactive.
+           * Blocked : when it tries to acquire an intrinsic object lock( but not a lock in java.util.concurrent library) that is currently hel by another thread.
+           * Waiting : it waits for another thread to notify the schduler of a condition.
+              * Object.wait() or Thread.join()
+               * java.util.concurrent Lock, Condition
+          * Timed waiting: several mthods have a timeout parameter.
+              * Thread.sleep(long),  Object.wait(long), Thread.join(long), Lock.tryLock(long), Condition.await(long)
+      * Terminated Threads
+          * It dies a natural death because the run() exits normally.
+           * It dies abruptly because an uncaught exception terminates the run() method.
+4. Thread Properities
+   * Properties
+      * every thread has a prority.
+      * by default, a thread inherits the priority of the thread that constructed  it.
+      * increase or decrease the priority with the setPriority() : MIN_PRIORITY(1), NORM_PRIORITY(5), MAX_PRIORITY(10)
+      * thread priorities are highly system depedent.
+      * priorites are mapped to the priorites of the hosted system.
+      * java.lang.Thread: static void yield(), cause the currently ececuting thread to yield.
+   * Daemon Threads
+      * t.setDaemon(true); turn a thread into a daemon thread.
+       * has no tthere role in life than to serve others.
+          * timer threads, or threads that clean up the cache entires.
+       * when only daemon threads remain, the VM exits
+       * A daemon thread should never access a persistent resource such as a file or DB.
+          * Since it can terminate at any time.
+   * Handlers for Uncaught Exceptions
+      * run() can not throw any checked exceptions, but it can be teminated by an unchecked exception and in that case thre thread dies.
+       * before the thread dies, the exception is passed to a handler for uncaught exceptions.
+       * the handler must belong to a class ihat implements the Thread.UncaughtExceptionHandler interface
+          * void uncaughtException(Thread t, Throwable e);
+       * setUncaughtException() ; set for a single thread. by default it is the thread's ThreadGroup object.
+       * setDefaultUncaughtException() ; set for all the thread, default is null.
+   * Thread group
+      * a collection of thread that can be managed together.
+       * by default, all threads that you created belongs to the same thread group.
+       * Also you can establish other groupings.
+       * Do not use thread groups in your programs.
+       * Implements the Thread.UncaughtExceptionHandler interface.
+         * if the thread group has a parent, the uncaughtException method of parent is called.
+          * Otherwise, ig the getDefaultExceptionHandler returns a non-null handler, it is called.
+          * Otherwise, if the Throwable is an instance of ThreadDeath, nothing happens.
+          * Otherwise, the name of the thread and the stack trace of th throwable are pinted on the System.err.
+         
+5. Synchronization
+   * An example of race condition:
+      * javap -c -v Bank to check the
+   * Lock Objects
+      * synchronized
+       * ReentrantLock
+          * myLock.lock();
+             try {
+                critical section;
+             }
+             finally {
+                myLock.unlock(); // make sure the lock is unlocked even if an exception is thrown
+             }
+            * A thread can repeatedly acquire a lock that it already owns.
+            * The lock keeps a hod count that keeps track of the nested calll to the lock methond.
+            * The thread has to call unlock for every call ot lock in order to relinquish the lock.
+        * java.util.concurrent.locks.ReetrantLock(boolean fair)
+           * fair locks are a lot slower than regular locks.
+   * Condition Objects
+      * lock.newCondition(), a lock may have multiple conditons
+       * condition.await(); // new the thread is deactived and gives up the lock.
+          * different to the lock()
+           * await(); // the thead enters the wait set for that condition.
+              * the thread is not runnalbe when the lock is available,
+               * it stays deactived until another thread has called the signalAll() on the same condition.
+           * signalAll()
+              * reactives all threads that are waiting for the condition
+               * removed from the wait set, and again runnable,
+               * they will reenter the object,
+               * as soon as the lock is available, one of them will acquire the lock, and continue where it left off.
+               * also need to check the condition.
+               *  while (!(ok to proceed)) { condition.await();}
+            * call signalAll() whenever the state of an object changes in a way that might be advantageous to waiting threads.
+           * signal()
+              * unblocks only one thread from the wait set, chosen at random.
+       * A thread can only call await, signalAll or signal on a condition when it owns the lock of the condition.
+       * summary
+         * A lock protects sections of code, allowing only one thread to execute the code at a time.
+             * A lock manages threads that are trying to enter a protected code segment.
+             * A lock can have one or more associated condition objects.
+             * Each condition object manages thread that have entered a protected code section but that cannot proceed.
+         
+   * The synchronized Keyword
+       * every object in java has a intrinsic lock
+          * synchronized : like intrinsicLock.lock()
+           * wait() : intrinsicCondition.await()
+           * notifyAll() : intrinsicCondition.signalAll()
+       * limitations
+          * can not interrupt a thread that is trying to acquire a lock.
+           * can not specify a time when trying to acquire a lock
+           * haveing a single condition per lock can be inefficient.
+       * static synchronized methods
+          * the lock of MYCLASS.class object is locked.
+       * remommendation
+          * it is best to use neither Lock/Codition nor the synchronized keyword. use java.util.concurrent
+           * use synchronized if it works, less code and less room for error.
+           * use Lock/Condition if you really need it.
+       * Synchronized Blocks
+          * synchronized(obj) { critical section; }
+   * The monitor Concept
+      * A monitor is a clas swith only private fields
+       * Each object of that class has an associated lock.
+       * All methods a locked by that lock.
+       * The lock can have any number of associated conditions
+   * Volatile Fields
+      * why
+          * computers with multiple processors can temporarily hole memory values in registers or local memory caches.
+           * compilers cna reorder instructions for maximum throughput.
+       * The volatile offers lock-feed mechanism for synchronizing access to an instance field.
+          * The compiler and Vm will take into account that the field may be concurrently updated by another thread.
+           * it doesn't provide any atomic.
+       * Use java.util.concurrent.atomic
+          * Use machiine-level instructions taht guarantee atomicity without using locks.
+      * current access to a field is safe in the following conditions
+          * The field is final, and it si accessed after the constructor has completed.
+           * every access to the field is protected by a common lock.
+           * the filed is volatile.
+   * Deadlocks.
+   * Lock Testing and Timeouts
+      * tryLock(), tries to acquire a lock and return true if it was successful. otherwise return false immedattely.
+       * await
+       * awaitUninterruptibly()
+   * Read/Write Locks
+      * java.util.concurrent.locks.ReentrantReadWriteLock
+          * private ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+           * private Lock readLock = rwl.readLock();
+           * private Lock writeLock = rwl.writeLock();
+           * share access for readers, and writer has exclusive access
+   * Wht the stop() and suspend() are deprecated.
+      * stop() : it may damage the object.
+       * suspend() : it may cause dead lock,
+6. Blocking Queues
+   * Block when you try to add and element when the queue is full or to remove an element when the queue is empty.
+   * usage:
+      * use as a thread management tool : put() and take(), blocked and wait
+       * add(), remove(), element() throws exception for adding to a full, or revmove from empty
+       * offer(), poll() , peek() return with a failure indicator instead of throw an exception.
+       * it is illegal to insert null values into these queues.
+       * + timeouts for offer(), poll()
+       * LinkedBlockingQueue, ArrayBlockingQueue, PriorityBlockingQueue, DelayQueue,
+7. Thread-safe Collections
+   * use lock to access
+   * use java.util.concurrent package
+   * copy on write arrays
+      * CopyOnWriteArrayList, CopyOnWriteArraySet
+   * Old thread-safe collections
+      * Vector, Hashtable
+   * Synchronization wrappers  :Collections.synchronized{List, Map}
+      * But when iterating, you still need lock.
+8. Callables and futures
+   * public interface Callable<V> { V call() throws Exception; }
+   * public interface Future<V> {...}
+9. Executors
+   * thread creat is somewhat expensive because it involves interaction with the OS.
+   * You should use thread pool in case of large number of short live threads.
+   * To limit the number of current threads.
+   * Thread Pools
+      * newCachedThreadPool : new threads are created as needed, idles are kept for 60 seconds
+       * newFixedThreadPool : hte pool contains a fixed set of threads. idles are kept indefinitely.
+       * newSingleThreadExecutor :
+       * newScheduledThreadPool
+       * newSingleThreadScheduledExecutor
+       * Future<?> submit(Runnable task)
+       * Future<T> submit(Runnalbe task, T result)
+       * Future<T> submit(Callable<T> task)
+       * shutDown()
+   * Scheduled Execution
+      * schedule()
+   * Controlling Groups of Tasks
+      * invokeAll();
+       * ExecutorCompletionService.submit()
+10. Synchronizers
+   * Semaphores
+      * manages a number of permits
+       * to restrict the total number of threads that can access a resource
+   * Countdown Latches
+      * lets a set of threads wait until a count has reached zero.
+       * it is one-time only.
+       * usage: when one or more threads need to wait a specified number of events have occurered
+   * Barriers
+      * CyclicBarrier
+          * When a number of threads need to compeleted before their result can be used.
+   * Exchangers
+      * usage : when two threads are woking on two instances of the same data structure buffer,.
+   * Synchronous Queueus
+      * pairs up producer and consumer threads.
+       * when a thead call put, it blocks until another thread calls take. And vice versa.
+       * the size() always return 0;
+11. Threads adnd Swing
+   * Swing is not thread safe.
+   * Running time-consuming tasks
+      * If an action takes a long time, do it in a seprate worker thread and never in the dispatch thread.
+       * Do not touch Swing components in any thread other than the event dipatch thread.
+          * Use invokeLater() and invokeAndWait() of the EventQueue
+              * no new thread is created.
+   * Using the Swing worker
+      * SwingWorker<K, V> implements Future<T>
+  
+      
+      
+       
