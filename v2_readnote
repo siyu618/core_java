@@ -1,0 +1,48 @@
+Chapter 1 : Streams and Files
+a. Streams
+   * input stream : an object from which we can read a sequence of bytes
+   * output stream : an object from which we can write a sequence of bytes 
+   * Read and wtite bytes
+      * int read()
+	  * void write(int b)
+   * By default, streams are not buffered.  Every call to ready asks the OS. 
+      * DataInputStream din = new DataInputStream( new BufferedInputStream ( new FileInputStream("test.dat")))
+   * PushbackInputStream
+b. Text Input and Output
+   * Write text output
+      * PrintWriter out = new PrintWriter("output.txt"); <==> PrintWriter out = new PrintWriter(new FileWriter("output.txt"));
+   * Read Text input
+      * BufferedReader in = new BufferedReader( new FileReader("input.txt") );
+   * Charset
+      in new io	  
+c. Reading and writing Binary Data
+   * DataInputStream, DataOuputStream
+   * Random-Access Files 
+      * When you open an existing file RandomAccessFile, it does not get deleted.
+	  * RandomAccessFile in = new RandomAccessFile("employee.dat", "r");
+	  * RandomAccessFile inOut = new RandomAccessFile("employee.dat", "rw");
+	     * length is diffcult for string type 
+		    * writeFixedString()  : pads the string, using zero values
+		    * readFixedString() : read until the zero value, and skip the remaining zero values
+			* java char : has 2 bytes
+d. ZIP Archives
+   * ZipInputStream zin = new ZipInputStream(new FileInputStream(zipname));
+   * ZipEntry entry;
+   * while ((entry = zin.getNextEntry) != null ) {
+   *    analyze entry;
+   *    read the contents of zin;
+   *    zin.closeEntry();
+   * }
+   * zin.close;
+e. Object Streams and Serializations
+   * implemets Serializable interface, and don't have to override any method. 
+   * ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("employee.dat"));
+      * out.writeObject(obj);
+   * If one object is shared by several object.
+      * each object is saved with a serial number. 
+
+
+
+
+
+   
