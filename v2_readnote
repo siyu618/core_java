@@ -41,8 +41,28 @@ e. Object Streams and Serializations
    * If one object is shared by several object.
       * each object is saved with a serial number. 
 
-
-
-
+   * Modifying the Default Serialization Mechanism
+      * Certain data fields should not be serialized.
+	     * like file handler, nonserializable classes
+		 * keyword : transient
+      * Externalizable
+	     * readExternal, writeExternal
+   * Serializing Singletons and Typesafe Enumeration
+      * readResolve() 
+   * Versioning 
+      * keep serialVersionUID the same.
+   * Using Serialization for Cloning
+      * To get clone free, just extend the SerialCloneable calss. 
+f. File Management
+g. New I/O
+   * java.nio
+      * Character set encoders and decodes
+	  * Nonblocking I/O
+	  * Memory-mapped files
+	  * File locking
+   * Memory-mapped files
+      * Plain Input Stream, Random Access File
+	  * Buffered Input Stream, Memory Mapped file
+	  	  
 
    

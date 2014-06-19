@@ -15,32 +15,32 @@ public class RandomFileTest {
         staff[0] = new Employee("Carl Cracker", 75000, 1987, 12, 15);
         staff[1] = new Employee("Harry Hacker", 50000, 1989, 10, 1);
         staff[2] = new Employee("Tony Tester", 40000, 1990, 3, 15);
-        try {
+try {
 
 
-            DataOutputStream out = new DataOutputStream(new FileOutputStream("employee.dat"));
-            for (Employee e : staff) {
+    DataOutputStream out = new DataOutputStream(new FileOutputStream("employee.dat"));
+    for (Employee e : staff) {
 
-                e.writeData(out);
-            }
-            out.close();
+        e.writeData(out);
+    }
+    out.close();
 
-            RandomAccessFile in = new RandomAccessFile("employee.dat", "r");
-            int n = (int) (in.length() / Employee.RECORD_SIZE);
-            Employee[] newStaff = new Employee[n];
-            for (int i = n - 1; i >= 0; i--) {
-                newStaff[i] = new Employee();
-                in.seek(i * Employee.RECORD_SIZE);
-                newStaff[i].readData(in);
-            }
-            in.close();
+    RandomAccessFile in = new RandomAccessFile("employee.dat", "r");
+    int n = (int) (in.length() / Employee.RECORD_SIZE);
+    Employee[] newStaff = new Employee[n];
+    for (int i = n - 1; i >=0 ; i --) {
+        newStaff[i] = new Employee();
+        in.seek(i * Employee.RECORD_SIZE);
+        newStaff[i].readData(in);
+    }
+    in.close();
 
-            for (Employee e : newStaff) {
-                System.out.println(e);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    for (Employee e : newStaff) {
+        System.out.println(e);
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
 
 
     }
@@ -48,13 +48,11 @@ public class RandomFileTest {
 
 
 class Employee {
-    public Employee() {
-    }
-
+    public Employee() {}
     public Employee(String name, double salary, int year, int month, int day) {
         this.name = name;
         this.salary = salary;
-        GregorianCalendar calendar = new GregorianCalendar(year, month - 1, day);
+        GregorianCalendar calendar = new GregorianCalendar(year, month-1, day);
         hireDay = calendar.getTime();
     }
 
@@ -84,10 +82,9 @@ class Employee {
         int y = in.readInt();
         int m = in.readInt();
         int d = in.readInt();
-        GregorianCalendar calendar = new GregorianCalendar(y, m - 1, d);
+        GregorianCalendar calendar = new GregorianCalendar(y, m-1, d);
         hireDay = calendar.getTime();
     }
-
     public static final int NAME_SIZE = 40;
     public static final int RECORD_SIZE = 2 * NAME_SIZE + 8 + 4 + 4 + 4;
     private String name;
@@ -103,10 +100,11 @@ class DataIO {
         boolean more = true;
         while (more && i < size) {
             char ch = in.readChar();
-            i++;
+            i ++;
             if (ch == 0) {
                 more = false;
-            } else {
+            }
+            else {
                 sb.append(ch);
             }
         }
@@ -115,7 +113,7 @@ class DataIO {
     }
 
     public static void writeFixedString(String s, int size, DataOutput out) throws IOException {
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i ++) {
             char ch = 0;
             if (i < s.length()) ch = s.charAt(i);
             out.writeChar(ch);
