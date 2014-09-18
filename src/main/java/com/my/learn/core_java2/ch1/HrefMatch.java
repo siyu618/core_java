@@ -1,7 +1,6 @@
 package com.my.learn.core_java2.ch1;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.regex.Matcher;
@@ -12,7 +11,7 @@ import java.util.regex.Pattern;
  */
 public class HrefMatch {
     public static void main(String[] args) {
-        String urlString = null;
+        String urlString;
         if (args.length > 0){
             urlString = args[0];
         }
