@@ -2,12 +2,12 @@ Chapter 1 : Streams and Files
 a. Streams
    * input stream : an object from which we can read a sequence of bytes
    * output stream : an object from which we can write a sequence of bytes 
-   * Read and wtite bytes
+   * Read and write bytes
       * int read()
 	  * void write(int b)
    * By default, streams are not buffered.  Every call to ready asks the OS. 
       * DataInputStream din = new DataInputStream( new BufferedInputStream ( new FileInputStream("test.dat")))
-   * PushbackInputStream
+   * PushBackInputStream
 b. Text Input and Output
    * Write text output
       * PrintWriter out = new PrintWriter("output.txt"); <==> PrintWriter out = new PrintWriter(new FileWriter("output.txt"));
@@ -16,7 +16,7 @@ b. Text Input and Output
    * Charset
       in new io	  
 c. Reading and writing Binary Data
-   * DataInputStream, DataOuputStream
+   * DataInputStream, DataOutputStream
    * Random-Access Files 
       * When you open an existing file RandomAccessFile, it does not get deleted.
 	  * RandomAccessFile in = new RandomAccessFile("employee.dat", "r");
@@ -35,7 +35,7 @@ d. ZIP Archives
    * }
    * zin.close;
 e. Object Streams and Serializations
-   * implemets Serializable interface, and don't have to override any method. 
+   * implements Serializable interface, and don't have to override any method.
    * ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("employee.dat"));
       * out.writeObject(obj);
    * If one object is shared by several object.
@@ -43,26 +43,37 @@ e. Object Streams and Serializations
 
    * Modifying the Default Serialization Mechanism
       * Certain data fields should not be serialized.
-	     * like file handler, nonserializable classes
+	     * like file handler, non-serializable classes
 		 * keyword : transient
       * Externalizable
 	     * readExternal, writeExternal
-   * Serializing Singletons and Typesafe Enumeration
+   * Serializing Singletons and Type safe Enumeration
       * readResolve() 
-   * Versioning 
+   * Version-ing
       * keep serialVersionUID the same.
    * Using Serialization for Cloning
-      * To get clone free, just extend the SerialCloneable calss. 
+      * To get clone free, just extend the SerialCloneable class.
 f. File Management
 g. New I/O
    * java.nio
       * Character set encoders and decodes
-	  * Nonblocking I/O
+	  * Non-blocking I/O
 	  * Memory-mapped files
 	  * File locking
    * Memory-mapped files
       * Plain Input Stream, Random Access File
 	  * Buffered Input Stream, Memory Mapped file
+   * ByteBuffer
+      * mainly used in network programming
+   * FileLock
+      * Can lock part or all of a file
+      * System dependent
+h. Regular Expression
+   * java.util.regex
+       * Pattern, Matcher
+          * replaceAll(), find(), group()
+
+
 	  	  
 
    
