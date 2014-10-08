@@ -73,6 +73,25 @@ h. Regular Expression
        * Pattern, Matcher
           * replaceAll(), find(), group()
 
+Chapter 2. XML (Extensible Markup Language)
+a. Parsing an XML Document
+   * DOM (Document Object Model)
+   * SAX (Simple API for XML)
+b. Validating an XML
+   * DTD (Data Type Definitions)
+   * XML Schema : Something more complex than the DTD
+c. Locating Information with XPath
+   * javax.xml.xpath
+d. Using namespace
+   * DocumentBuilderFactory.setNamespaceAware(true);
+e. Generating XML Documents
+   * javax.xml.parsers.DocumentBuilder
+   * javax.xml.transform.Transformer
+   * javax.xml.stream.XMLOutputFactory
+f. XSL Transformations
+   * Transform one format to another
+
+
 
 	  	  
 
