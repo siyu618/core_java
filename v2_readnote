@@ -91,6 +91,12 @@ e. Generating XML Documents
 f. XSL Transformations
    * Transform one format to another
 
+Chapter 3. Networking
+a. Connecting to a server
+   * telnet host port
+   * Socket with timeout
+   * Internet address: one host may has many address due to load balance
+
 
 
 	  	  
