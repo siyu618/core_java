@@ -96,7 +96,19 @@ a. Connecting to a server
    * telnet host port
    * Socket with timeout
    * Internet address: one host may has many address due to load balance
-
+b. Implementing a Server
+   * ServerSocket()
+   * Service side has a loop to accept the connection from clients, each client is processed by a separate thread.
+   * Half close
+      * provides the ability for one end to close its output stream
+c. Interruptable Sockets
+   * To interrupt a socket, use SocketChannel.
+      * SocketChannel channel = SocketChannel.open(new InetSocketAddress(host, port));
+      * Scanner in = new Scanner(channel);
+      * OutputStream outStream = Channels.newOutputStream(channel);
+d. Sending E-Mail
+   * Open a socket to the mail server with SMTP protocol
+   * Send message in SMTP protocol 
 
 
 	  	  
