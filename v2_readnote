@@ -108,8 +108,15 @@ c. Interruptable Sockets
       * OutputStream outStream = Channels.newOutputStream(channel);
 d. Sending E-Mail
    * Open a socket to the mail server with SMTP protocol
-   * Send message in SMTP protocol 
-
+   * Send message in SMTP protocol
+e. Making URL connections
+   * URL and URI
+      * URL is a kind of URI: URL can specify a resource, other URI is URN (Uniform resource name)
+      * URI
+         * Relative and absolute
+      * URLEncoder.encode(value, "UTF-8")
+   * Post Form data
+      * InputStream err = ((HttpURLConnection) connection).getErrorStream();
 
 	  	  
 
