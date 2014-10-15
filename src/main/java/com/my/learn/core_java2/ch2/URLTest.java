@@ -8,8 +8,16 @@ import java.util.Scanner;
  */
 public class URLTest
 {
+    public static void test() throws MalformedURLException {
+        String urlString = "http://www.baidu.com";
+        URL url = new URL(urlString);
+        URL subUrl = new URL(url, "test");
+        System.out.println(subUrl.toString());
+    }
+
     public static void main(String args[]) throws Exception
     {
+        test();;
         Scanner scanner = new Scanner(System.in);
         try
         {
