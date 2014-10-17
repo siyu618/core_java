@@ -35,6 +35,7 @@ public class URLTest
 
                     String str;
                     while ((str = br.readLine()) != null) {
+                        System.out.flush();
                         System.out.println(str);
                         System.out.flush();
                     }

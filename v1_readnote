@@ -832,7 +832,7 @@ Chapter 14: Multiple Threading
    * public interface Callable<V> { V call() throws Exception; }
    * public interface Future<V> {...}
 9. Executors
-   * thread creat is somewhat expensive because it involves interaction with the OS.
+   * thread creation is somewhat expensive because it involves interaction with the OS.
    * You should use thread pool in case of large number of short live threads.
    * To limit the number of current threads.
    * Thread Pools
@@ -842,7 +842,7 @@ Chapter 14: Multiple Threading
        * newScheduledThreadPool
        * newSingleThreadScheduledExecutor
        * Future<?> submit(Runnable task)
-       * Future<T> submit(Runnalbe task, T result)
+       * Future<T> submit(Runnable task, T result)
        * Future<T> submit(Callable<T> task)
        * shutDown()
    * Scheduled Execution
@@ -850,7 +850,7 @@ Chapter 14: Multiple Threading
    * Controlling Groups of Tasks
       * invokeAll();
        * ExecutorCompletionService.submit()
-10. Synchronizers
+10. Synchronizes
    * Semaphores
       * manages a number of permits
        * to restrict the total number of threads that can access a resource
@@ -863,11 +863,11 @@ Chapter 14: Multiple Threading
           * When a number of threads need to compeleted before their result can be used.
    * Exchangers
       * usage : when two threads are woking on two instances of the same data structure buffer,.
-   * Synchronous Queueus
+   * Synchronous Queues
       * pairs up producer and consumer threads.
-       * when a thead call put, it blocks until another thread calls take. And vice versa.
+       * when a thread call put, it blocks until another thread calls take. And vice versa.
        * the size() always return 0;
-11. Threads adnd Swing
+11. Threads and Swing
    * Swing is not thread safe.
    * Running time-consuming tasks
       * If an action takes a long time, do it in a seprate worker thread and never in the dispatch thread.

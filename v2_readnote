@@ -118,6 +118,28 @@ e. Making URL connections
    * Post Form data
       * InputStream err = ((HttpURLConnection) connection).getErrorStream();
 
+Chapter 4. Database Programming
+a. The JDBC Design
+b. The Structured Query Language(SQL)
+c. JDBC Configuration
+d. Executing SQL Statements
+e. Query Execution
+   * PreparedStatement
+      * setXXX()
+   * A rule of thumb : If you can do it in the SQL, don't do it in th Java.
+   * Reading and Writing Large Objects(LOBs)
+      * Binary Large Object (BLOB)
+      * Character large Object (CLOB)
+   * SQL Escapes
+      * Date and Time
+      * Call scalar functions
+      * Call stored procedures
+      * Outer joins
+      * The escape character in LIKE
+   * Multiple Results
+      * multiple select in a single query
+   * Retrieving Auto-generated Keys
+
 	  	  
 
    
