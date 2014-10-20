@@ -139,6 +139,46 @@ e. Query Execution
    * Multiple Results
       * multiple select in a single query
    * Retrieving Auto-generated Keys
+f. Scrollable and Updatable Result Sets
+   * Statement stat = conn.createStatement(type, concurrency);
+   * PreparedStatement stat = conn.prepareStatement(command, type, concurrency);
+      * Type : TYPE_FORWARD_ONLY, TYPE_SCROLL_INSENSITIVE, TYPE_SCROLL_SENSITIVE
+      * CONCURRENCY :   CONCUR_READ_ONLY, CONCUR_UPDATABLE
+g. Row Set
+   * Result Sets keeps the connection to th DB
+   * javax.sql.rowset
+      * CachedRowSet, WebRowSet
+h. Metadata
+   * DatabaseMetaData meta = conn.getMetaData();
+i. Transactions
+   * Sometime we need some action full done or undone, no half-done is allowed.
+   * By default the connection commits automatically, you need to turn it off.
+      * conn.setAutoCommit(false);
+      * conn.commit() if failed, conn.rollback()
+   * Save Points
+      * Savepoint svpt = conn.setSavepoint();
+      * conn.rollback(svpt)
+      * conn.releaseSavepoint(svpt); // release a save point when it is not needed.
+   * Batch Update
+      * batch update to improve many single sqls.
+   * Advanced SQL Types
+      * ARRAY, ROWID
+j. Connection Management in Web and Enterprise Applications
+   * Context jndiContext = new InitialContext();
+     DataSource source = (DataSource) jndiContext.lookup("java:comp/env/jdbc/corejava");
+     Connection conn = source.getConnection();
+   * Connection Pool
+k. Introduction to LDAP(Lightweight Directory Access Protocol)
+   * Most used for storage for directories that contain the data such as use names, passwords and permissions.
+   * Keeps the data in a tree structure.
+
+Chapter 5. Internationalization
+a. Locales
+   * ISO : International Organization for Standardization.
+
+
+
+
 
 	  	  
 
