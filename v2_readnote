@@ -175,6 +175,29 @@ k. Introduction to LDAP(Lightweight Directory Access Protocol)
 Chapter 5. Internationalization
 a. Locales
    * ISO : International Organization for Standardization.
+b. Number Formats & Currency
+c. Date & Time
+d. Collation
+e. Message Formatting
+   * Choice
+f. Text Files and Character Sets
+   * Character Encoding of Source Files
+      * javac -encoding Big5 Myfile.java
+      * native2ascii Myfile.java Myfile.temp
+      * native2ascii -reverse Myfile.temp Myfile.java
+
+The following chapters are GUI related.....
+Chapter 6. Advanced Swing
+Chapter 7. Advanced AWT
+a. Why Beans
+   * Java Bean : A bean is a reusable software component based on Sun's JavaBeans specification that can be manipulated visually in a build tool.
+b. The Bean Writing Process
+c. Naming patterns
+   * getXXX, isXXX
+   * setXXX
+
+
+
 
 
 
