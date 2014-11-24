@@ -195,6 +195,51 @@ b. The Bean Writing Process
 c. Naming patterns
    * getXXX, isXXX
    * setXXX
+Chapter 8. JavaBean Components
+
+Chapter 9. Security
+a. Class loaders
+   * example to load MyProgram
+      * the MyProgram has any filed and superclasses of another type, their class files are also loaded.
+      * the VM executes the main method (which is static, so no instance of the class to be created. )
+      * load the class used in main or the methods invoked by main.
+   * The class loader hierarchy
+      * bootstrap class loader --< extension class loader --< system class loader --< plugin class loader
+   * Write your own class loaders
+b. Bytecode Verification
+   * The verifier checks the instructions(in the class file) can not perform actions that are obviously damaging.
+   * Skip the verify
+      * java -noverify Hello
+c. Security Managers and Permissions
+   * set , check if the action is allowed.
+   * Java Platform Security
+      * permission java.io.FilePermission "/tmp/*", "read,write";
+   * Security Policy Files
+      * java.policy and .java.policy
+      * System.setProperty("java.security.policy", "MyApp.policy");
+      * java -Djava.security.policy=MyApp.policy MyApp
+      * appletviewer -J-Djava.security.policy=MyApplet.policy MyApplet.html
+   * Customer Permission
+      * Implementation of a Permission Class
+d. User Authentication
+e. Digital Signing
+f. Code Signing
+g. Encryption
+
+Chapter 10. Distributed Objects
+a. C/S
+b. RMI
+c. Web Service and JAX-WS
+
+Chapter 11. Scripting, Compiling and Annotation Processing
+a. invoke script.
+b. compiler api
+c. annotations
+   * source level
+   * runtime level
+   * bytecode level & load time
+
+
 
 
 
