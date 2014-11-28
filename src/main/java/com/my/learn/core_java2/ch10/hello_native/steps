@@ -1,0 +1,9 @@
+1. javac com/my/learn/core_java2/ch10/hello_native/*.java
+2. javah com.my.learn.core_java2.ch10.hello_native.HelloNative
+3. edit the HelloNative.c
+4. gcc -fPIC -I $JAVA_HOME/include -I $JAVA_HOME/include/linux -shared -o libHelloNative.so HelloNative.c
+5. java -Djava.library.path=`pwd` com.my.learn.core_java2.ch10.hello_native.HelloNativeTest
+
+on mac, I did not run it successfully.
+Be careful that the  XXX.h file is related to the package name of XXX.java
+
