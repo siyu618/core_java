@@ -239,6 +239,18 @@ c. annotations
    * runtime level
    * bytecode level & load time
 
+Chapter 12. Native methods
+a. Calling a C function in Java
+b. numeric parameters and return values.
+c. string parameters
+d. accessing fields
+e. encoding signatures
+f. calling java methods
+g. accessing array elements
+h. handling errors
+i. using the invocation API
+j.
+
 
 
 
